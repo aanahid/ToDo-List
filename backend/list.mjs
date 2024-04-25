@@ -35,6 +35,28 @@ export class List {
     return List.#all_lists.map((list) => list.json());
   }
 
+  getID() {
+    return this.#id;
+  }
+
+  getTitle() {
+    return this.#title;
+  }
+
+  static findByID(id) {
+    return List.#all_lists.find((l) => {
+      return l.getID() == id;
+    });
+  }
+
+  deleteList() {
+    List.#all_lists = List.#all_lists.filter((l) => l !== this);
+  }
+
+  deleteTask(id) {
+    this.#tasks = this.#tasks.filter((t) => t.getID() !== id);
+  }
+
   addTask(data) {
     const task = Task.create(data);
     this.#tasks.push(task);

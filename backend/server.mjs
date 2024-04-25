@@ -10,8 +10,81 @@ const PORT = 3000;
 app.use(bodyParser.json());
 
 // Routes
-app.get("/api/data", (req, res) => {
+
+// Get all lists with their tasks
+app.get("/lists", (req, res) => {
   res.json(List.getAllLists());
+});
+
+app.post("/lists", (req, res) => {
+  let list = List.create(req.body);
+
+  if (!list) {
+    res.status(400).send("Could not create list.");
+  }
+
+  res.status(201).json(list.json());
+});
+
+app.put("/lists/:id", (req, res) => {
+  let id = parseInt(req.params.id);
+  if (isNaN(id) || id < 0) {
+    res.status(400).send("Invalid ID.");
+  }
+  let list = List.findByID(id);
+  if (!list) {
+    res.status(404).send("List not found.");
+  }
+  list.addTask(req.body);
+  res.status(200).json(list.json());
+});
+
+app.delete("/lists/:id", (req, res) => {
+  let id = parseInt(req.params.id);
+  if (isNaN(id) || id < 0) {
+    res.status(400).send("Invalid ID.");
+  }
+  let list = List.findByID(id);
+  if (!list) {
+    res.status(404).send("List not found.");
+  }
+  list.deleteList();
+  res.status(200).json();
+});
+
+app.put("/tasks/:id", (req, res) => {
+  let id = parseInt(req.params.id);
+  if (isNaN(id) || id < 0) {
+    res.status(400).send("Invalid ID.");
+  }
+  let task = Task.findByID(id);
+  if (!task) {
+    res.status(404).send("Task not found.");
+  }
+  task.editTask(req.body);
+  res.status(200).json(task.json());
+});
+
+app.delete("/lists/:id/:tid", (req, res) => {
+  let id = parseInt(req.params.id);
+  if (isNaN(id) || id < 0) {
+    res.status(400).send("Invalid ID.");
+  }
+  let list = List.findByID(id);
+  if (!list) {
+    res.status(404).send("List not found.");
+  }
+  let tid = parseInt(req.params.tid);
+  if (isNaN(tid) || tid < 0) {
+    res.status(400).send("Invalid ID.");
+  }
+  let task = Task.findByID(tid);
+  if (!task) {
+    res.status(404).send("Task not found.");
+  }
+
+  list.deleteTask(tid);
+  res.status(200).json();
 });
 
 // Test Data ----------------------

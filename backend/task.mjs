@@ -41,6 +41,46 @@ export class Task {
     return Task.#all_tasks.map((task) => task.json());
   }
 
+  static findByID(id) {
+    return Task.#all_tasks.find((t) => {
+      return t.getID() == id;
+    });
+  }
+
+  getID() {
+    return this.#id;
+  }
+
+  deleteTask() {
+    Task.#all_tasks = Task.#all_tasks.filter((t) => t !== this);
+  }
+
+  editTask(data) {
+    if (data !== undefined && data instanceof Object) {
+      if (data.title) {
+        if (typeof data.title != "string") {
+          return null;
+        } else {
+          this.#title = data.title;
+        }
+      }
+      if (data.description) {
+        if (typeof data.description != "string") {
+          return null;
+        } else {
+          this.#description = data.description;
+        }
+      }
+      if (data.completed) {
+        if (typeof data.completed != "boolean") {
+          return null;
+        } else {
+          this.#completed = data.completed;
+        }
+      }
+    }
+  }
+
   json() {
     return {
       id: this.#id,
