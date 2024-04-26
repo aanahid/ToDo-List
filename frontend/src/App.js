@@ -1,6 +1,7 @@
 import './App.css';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+import { ListForm } from "./Components/ListForm"
 
 function App() {
   const [lists, setLists] = useState([]);
@@ -19,6 +20,10 @@ function App() {
     }
   }
 
+  const updateList = (newList) => {
+    setLists([...lists, newList]);
+  };
+
   return (
     <div>
       <ul>
@@ -27,6 +32,7 @@ function App() {
             {list.title}
           </li>
         ))}
+        <ListForm updateList={updateList}/>
       </ul>
     </div>
   );
