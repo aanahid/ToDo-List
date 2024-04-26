@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import bodyParser from "body-parser";
 import { Task } from "./task.mjs";
 import { List } from "./list.mjs";
@@ -8,7 +9,7 @@ const PORT = 3000;
 
 // Middleware
 app.use(bodyParser.json());
-
+app.use(cors());
 // Routes
 
 // Get all lists with their tasks
