@@ -71,7 +71,7 @@ export class Task {
           this.#description = data.description;
         }
       }
-      if (data.completed) {
+      if (data.completed !== undefined) {
         if (typeof data.completed != "boolean") {
           return null;
         } else {
@@ -85,6 +85,7 @@ export class Task {
     return {
       id: this.#id,
       title: this.#title,
+      completed: this.#completed
     };
   }
 }

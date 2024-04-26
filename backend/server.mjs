@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
+// import session from "express-session";
 import { Task } from "./task.mjs";
 import { List } from "./list.mjs";
 
@@ -10,9 +11,22 @@ const PORT = 3000;
 // Middleware
 app.use(bodyParser.json());
 app.use(cors());
+// app.use(session({
+//   secret: 'sea-fairy-cookie',
+//   resave: false,
+//   saveUninitialized: false
+// })
+// );
+
 // Routes
 
 // Get all lists with their tasks
+// app.get("/sessions", (req, res) => {
+//   const sessionData = req.session;
+//   sessionData = List.getAllLists();
+//   res.send('Session data updated');
+// });
+
 app.get("/lists", (req, res) => {
   res.json(List.getAllLists());
 });

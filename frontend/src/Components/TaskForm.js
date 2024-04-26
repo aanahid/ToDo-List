@@ -1,7 +1,7 @@
 import React, {useState} from "react"
 import axios from 'axios';
 
-export const ListForm = ({ fetchItems }) => {
+export const TaskForm = ({ fetchItems, id }) => { 
     const [title, setTitle] = useState("");
     const [showInput, setShowInput] = useState(false);
     
@@ -17,7 +17,7 @@ export const ListForm = ({ fetchItems }) => {
         e.preventDefault();
 
         try {
-            await axios.post('http://localhost:3000/lists', { title });
+            await axios.put(`http://localhost:3000/lists/${id}`, { title });
             setTitle('');
             setShowInput(false);
             fetchItems();
@@ -28,7 +28,7 @@ export const ListForm = ({ fetchItems }) => {
 
     return (
         <div>
-            <button onClick={handleClick}>Create List</button>
+            <button onClick={handleClick}>Create Task</button>
             {showInput && (
                 <form onSubmit={handleSubmit}>
                 <input
@@ -42,4 +42,5 @@ export const ListForm = ({ fetchItems }) => {
             )}
         </div>
     );
+
 }
