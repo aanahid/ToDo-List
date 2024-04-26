@@ -35,6 +35,12 @@ export class List {
     return List.#all_lists.map((list) => list.json());
   }
 
+  static findByID(id) {
+    return List.#all_lists.find((l) => {
+      return l.getID() == id;
+    });
+  }
+
   getID() {
     return this.#id;
   }
@@ -43,10 +49,16 @@ export class List {
     return this.#title;
   }
 
-  static findByID(id) {
-    return List.#all_lists.find((l) => {
-      return l.getID() == id;
-    });
+  editTitle(data) {
+    if (data !== undefined && data instanceof Object) {
+      if (data.title) {
+        if (typeof data.title != "string") {
+          return null;
+        } else {
+          this.#title = data.title;
+        }
+      }
+    }
   }
 
   deleteList() {

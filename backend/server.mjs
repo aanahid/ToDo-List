@@ -11,21 +11,6 @@ const PORT = 3000;
 // Middleware
 app.use(bodyParser.json());
 app.use(cors());
-// app.use(session({
-//   secret: 'sea-fairy-cookie',
-//   resave: false,
-//   saveUninitialized: false
-// })
-// );
-
-// Routes
-
-// Get all lists with their tasks
-// app.get("/sessions", (req, res) => {
-//   const sessionData = req.session;
-//   sessionData = List.getAllLists();
-//   res.send('Session data updated');
-// });
 
 app.get("/lists", (req, res) => {
   res.json(List.getAllLists());
@@ -51,6 +36,19 @@ app.put("/lists/:id", (req, res) => {
     res.status(404).send("List not found.");
   }
   list.addTask(req.body);
+  res.status(200).json(list.json());
+});
+
+app.put("/edit/:id", (req, res) => {
+  let id = parseInt(req.params.id);
+  if (isNaN(id) || id < 0) {
+    res.status(400).send("Invalid ID.");
+  }
+  let list = List.findByID(id);
+  if (!list) {
+    res.status(404).send("List not found.");
+  }
+  list.editTitle(req.body);
   res.status(200).json(list.json());
 });
 

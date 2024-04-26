@@ -3,6 +3,8 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { ListForm } from "./Components/ListForm";
 import { TaskForm } from "./Components/TaskForm";
+import { EditListForm } from "./Components/EditListForm";
+import { EditTaskForm } from "./Components/EditTaskForm";
 
 function App() {
   const [lists, setLists] = useState([]);
@@ -61,7 +63,8 @@ function App() {
         {lists.map((list) => (
           <li key={list.id}>
             {list.title}
-            <button onClick={(e) => handleRemoveList(e, list.id)}>X</button>
+            <button onClick={(e) => handleRemoveList(e, list.id)}>✖️</button>
+            <EditListForm fetchItems={fetchItems} id={list.id} />
             <ul>
               {list.tasks.map((t) => (
                 <li key={t.id}>
@@ -71,8 +74,9 @@ function App() {
                     onChange={(e) => handleCheck(e, t.id)}
                   />
                   <button onClick={(e) => handleRemoveTask(e, list.id, t.id)}>
-                    X
+                    ✖️
                   </button>
+                  <EditTaskForm fetchItems={fetchItems} id={t.id} />
                 </li>
               ))}
               <TaskForm fetchItems={fetchItems} id={list.id} />
