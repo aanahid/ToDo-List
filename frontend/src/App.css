@@ -1,19 +1,40 @@
+/* Default styles for light mode */
 body {
-  --color-background: #fafafa;
-  --color-foreground: #1f2023;
+  margin: 0px;
+  padding: 0px;
+}
 
+#page {
+  --color-background: #ccb5e1;
+  --color-foreground: #29242d;
   --image-grayscale: 0;
   --image-opacity: 100%;
+  height: 100vh;
+  width: 100vw;
+  transition: background-color 0.5s ease; /* Add transition for background color */
 }
-body.dark {
-  --color-background: #1f2023;
-  --color-foreground: #efefef;
 
+/* Dark mode styles */
+#page.dark-mode {
+  --color-background: #29242d;
+  --color-foreground: #efefef;
   --image-grayscale: 50%;
   --image-opacity: 90%;
 }
 
-img,
-video {
+/* Apply background and text color based on mode */
+#page,
+#page.dark-mode {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+}
+
+/* Apply grayscale and opacity to images and videos */
+#page img,
+#page video,
+#page.dark-mode img,
+#page.dark-mode video {
   filter: grayscale(var(--image-grayscale)) opacity(var(--image-opacity));
 }
+
+/* Additional styles for specific elements can be added here */
