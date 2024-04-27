@@ -5,6 +5,7 @@ import { ListForm } from "./Components/ListForm";
 import { TaskForm } from "./Components/TaskForm";
 import { EditListForm } from "./Components/EditListForm";
 import { EditTaskForm } from "./Components/EditTaskForm";
+import { Bored } from "./Components/Bored";
 
 function App() {
   const [lists, setLists] = useState([]);
@@ -85,6 +86,7 @@ function App() {
         ))}
         <ListForm fetchItems={fetchItems} />
       </ul>
+      <Bored/>
     </div>
   );
 }
