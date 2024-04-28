@@ -13,7 +13,6 @@ export const Bored = () => {
         try {
             const response = await axios.get(`https://www.boredapi.com/api/activity/`);
             setActivity(response.data.activity);
-            console.log(activity);
           } catch (error) {
             console.error("Error getting activity:", error);
           }

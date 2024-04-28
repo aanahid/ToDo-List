@@ -9,12 +9,14 @@ import { Bored } from "./Components/Bored";
 
 function App() {
   const [lists, setLists] = useState([]);
-  const [darkMode, setDarkMode] = useState();
+  const [darkMode, setDarkMode] = useState(() => {
+    const storedMode = localStorage.getItem("darkMode");
+    // If storedMode is null (not set in localStorage), default to false (light mode)
+    return storedMode ? JSON.parse(storedMode) : false;
+  });
 
   useEffect(() => {
     fetchItems();
-    const isDarkMode = localStorage.getItem("darkMode") | true;
-    setDarkMode(isDarkMode);
   }, []);
 
   useEffect(() => {
@@ -73,6 +75,7 @@ function App() {
                   <input
                     type="checkbox"
                     onChange={(e) => handleCheck(e, t.id)}
+                    checked={t.completed}
                   />
                   <button onClick={(e) => handleRemoveTask(e, list.id, t.id)}>
                     ✖️
