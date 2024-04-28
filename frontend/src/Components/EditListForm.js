@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome" 
+import { faPenToSquare } from "@fortawesome/free-regular-svg-icons"
 
 export const EditListForm = ({ fetchItems, id }) => {
   const [title, setTitle] = useState("");
@@ -31,7 +33,9 @@ export const EditListForm = ({ fetchItems, id }) => {
 
   return (
     <div>
-      <button onClick={handleClick}>📝</button>
+      <button onClick={handleClick}>
+        <FontAwesomeIcon icon={ faPenToSquare }/>
+      </button>
       {showInput && (
         <form onSubmit={(e) => handleSubmit(e, id)}>
           <input

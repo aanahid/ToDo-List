@@ -1,5 +1,7 @@
 import React, {useState} from "react"
 import axios from 'axios';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome" 
+import { faSquarePlus } from "@fortawesome/free-solid-svg-icons"
 
 export const ListForm = ({ fetchItems }) => {
     const [title, setTitle] = useState("");
@@ -28,7 +30,9 @@ export const ListForm = ({ fetchItems }) => {
 
     return (
         <div>
-            <button onClick={handleClick}>Create List</button>
+            <button onClick={handleClick}>
+                <FontAwesomeIcon icon={ faSquarePlus }/> New List
+            </button>
             {showInput && (
                 <form onSubmit={handleSubmit}>
                 <input

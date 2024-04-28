@@ -1,5 +1,7 @@
 import React, {useState} from "react"
 import axios from 'axios';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome" 
+import { faCirclePlus } from "@fortawesome/free-solid-svg-icons"
 
 export const TaskForm = ({ fetchItems, id }) => { 
     const [title, setTitle] = useState("");
@@ -28,7 +30,9 @@ export const TaskForm = ({ fetchItems, id }) => {
 
     return (
         <div>
-            <button onClick={handleClick}>Create Task</button>
+            <button onClick={handleClick}>
+                <FontAwesomeIcon icon={ faCirclePlus }/> New Task
+            </button>
             {showInput && (
                 <form onSubmit={handleSubmit}>
                 <input
