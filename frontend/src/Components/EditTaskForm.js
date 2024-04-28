@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome" 
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons"
+import { faTrashCan } from "@fortawesome/free-regular-svg-icons"
+import { faCircleCheck } from "@fortawesome/free-regular-svg-icons"
 
-export const EditTaskForm = ({ fetchItems, id }) => {
-  const [title, setTitle] = useState("");
+export const EditTaskForm = ({ fetchItems, id, tid, currTitle, completed, lists }) => {
+  const [title, setTitle] = useState(currTitle);
   const [showInput, setShowInput] = useState(false);
 
   const handleClick = () => {
@@ -15,15 +17,27 @@ export const EditTaskForm = ({ fetchItems, id }) => {
     setTitle(e.target.value);
   };
 
-  const handleSubmit = async (e, id) => {
+  const handleCheck = async (e, taskId) => {
+    try {
+      await axios.put(`http://localhost:3000/tasks/${taskId}`, {
+        completed: !lists
+          .find((list) => list.tasks.some((task) => task.id === taskId))
+          .tasks.find((task) => task.id === taskId).completed,
+      });
+      fetchItems();
+    } catch (error) {
+      console.error("Error checking task:", error);
+    }
+  };
+
+  const handleSubmit = async (e, tid) => {
     e.preventDefault();
     if (!title.trim()) {
       return;
     }
 
     try {
-      await axios.put(`http://localhost:3000/tasks/${id}`, { title });
-      setTitle("");
+      await axios.put(`http://localhost:3000/tasks/${tid}`, { title });
       setShowInput(false);
     } catch (error) {
       console.error("Error editing task:", error);
@@ -31,21 +45,39 @@ export const EditTaskForm = ({ fetchItems, id }) => {
     fetchItems();
   };
 
+  const handleRemoveTask = async (e, id, tid) => {
+    await axios.delete(`http://localhost:3000/lists/${id}/${tid}`);
+    fetchItems();
+  };
+
   return (
     <div>
-      <button onClick={handleClick}>
-        <FontAwesomeIcon icon={ faPenToSquare }/>
-      </button>
-      {showInput && (
+      {showInput ? (
         <form onSubmit={(e) => handleSubmit(e, id)}>
           <input
             type="text"
             value={title}
             onChange={handleChange}
-            placeholder="Enter something..."
           />
-          <button type="submit">Submit</button>
+          <button type="submit">
+            <FontAwesomeIcon icon={ faCircleCheck }/>
+          </button>
         </form>
+      ) : (
+        <div>
+          <span>{title}</span>
+          <input
+            type="checkbox"
+            onChange={(e) => handleCheck(e, tid)}
+            checked={completed}
+          />
+          <button onClick={handleClick}>
+            <FontAwesomeIcon icon={faPenToSquare} />
+          </button>
+          <button onClick={(e) => handleRemoveTask(e, id, tid)}>
+            <FontAwesomeIcon icon={ faTrashCan }/>
+          </button>
+        </div>
       )}
     </div>
   );
