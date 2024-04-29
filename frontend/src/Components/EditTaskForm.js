@@ -59,14 +59,23 @@ export const EditTaskForm = ({
 
   return (
     <div>
-      {showInput ? (
+      {!showInput ? (
+        <button onClick={handleClick} aria-label="Edit Task">
+          📝
+        </button>
+      ) : (
         <form onSubmit={(e) => handleSubmit(e, id)}>
-          <input type="text" value={title} onChange={handleChange} />
-          <button type="submit">
-            <FontAwesomeIcon icon={faCircleCheck} />
+          <input
+            type="text"
+            value={title}
+            onChange={handleChange}
+            placeholder="Edit task"
+          />
+          <button type="submit" aria-label="Submit">
+            ✔️
           </button>
         </form>
-      ) : (
+      )} : (
         <div>
           <span>{title}</span>
           <input
@@ -81,7 +90,7 @@ export const EditTaskForm = ({
             <FontAwesomeIcon icon={faTrashCan} />
           </button>
         </div>
-      )}
+      )
     </div>
   );
 };

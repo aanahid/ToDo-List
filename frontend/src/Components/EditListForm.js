@@ -38,15 +38,24 @@ export const EditListForm = ({ fetchItems, id, currTitle }) => {
   };
 
   return (
-    <div>
-      {showInput ? (
+    <div className="edit-form">
+      {!showInput ? (
+        <button onClick={handleClick} aria-label="Edit List Title">
+          📝
+        </button>
+      ) : (
         <form onSubmit={(e) => handleSubmit(e, id)}>
-          <input type="text" value={title} onChange={handleChange} />
-          <button type="submit">
-            <FontAwesomeIcon icon={faCircleCheck} />
+          <input
+            type="text"
+            value={title}
+            onChange={handleChange}
+            placeholder="Enter new title"
+          />
+          <button type="submit" aria-label="Submit">
+            ✔️
           </button>
         </form>
-      ) : (
+      )} : (
         <div className="list-header">
           <span className="list-title">{title}</span>
           <button onClick={handleClick}>
@@ -56,7 +65,7 @@ export const EditListForm = ({ fetchItems, id, currTitle }) => {
             <FontAwesomeIcon icon={faTrashCan} />
           </button>
         </div>
-      )}
+      )
     </div>
   );
 };

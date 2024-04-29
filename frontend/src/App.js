@@ -39,48 +39,66 @@ function App() {
 
   return (
     <div id="page" className={darkMode ? "dark-mode" : ""}>
-      <button
-        id="dark-toggle"
-        aria-label="Dark mode toggle"
-        className="icon-button"
-        onClick={() => setDarkMode((prevMode) => !prevMode)}
-      >
-        {darkMode ? (
-          <FontAwesomeIcon icon={faSun} />
-        ) : (
-          <FontAwesomeIcon icon={faMoon} />
-        )}
-      </button>
-      <h1>Welcome to GamePlan</h1>
-      <span>Track your tasks with to-do lists!</span>
-      <ul className="lists">
-        {lists.map((list) => (
-          <li key={list.id}>
-            <EditListForm
-              fetchItems={fetchItems}
-              id={list.id}
-              currTitle={list.title}
-            />
-            <ul className="tasks-list">
-              {list.tasks.map((t) => (
-                <li key={t.id}>
-                  <EditTaskForm
-                    fetchItems={fetchItems}
-                    id={list.id}
-                    tid={t.id}
-                    currTitle={t.title}
-                    completed={t.completed}
-                    lists={lists}
-                  />
-                </li>
-              ))}
-              <TaskForm fetchItems={fetchItems} id={list.id} />
-            </ul>
-          </li>
-        ))}
+      <div id="content">
+        <button
+          id="dark-toggle"
+          aria-label="Dark mode toggle"
+          className="icon-button"
+          onClick={() => setDarkMode((prevMode) => !prevMode)}
+        >
+          {darkMode ? "🔆" : "🌙"}
+        </button>
+        <h1>Welcome to GamePlan</h1>
+        <span>Track your tasks with to-do lists!</span>
+
+        <div className="lists-container">
+          <ul className="lists">
+            {lists.map((list) => (
+              <li key={list.id}>
+                <div className="list-header">
+                  <h2>
+                    <span className="list-title">{list.title}</span>
+                  </h2>
+                  <div className="actions">
+                    <EditListForm fetchItems={fetchItems} id={list.id} />
+                  </div>
+                  <button
+                    id="remove-button"
+                    aria-label="Remove List"
+                    onClick={(e) => handleRemoveList(e, list.id)}
+                  >
+                    ✖️
+                  </button>
+                </div>
+                <ul className="tasks-list">
+                  {list.tasks.map((t) => (
+                    <li key={t.id}>
+                      <input
+                        type="checkbox"
+                        onChange={(e) => handleCheck(e, t.id)}
+                      />
+                      <span className="item-title">{t.title}</span>
+                      <div className="actions">
+                        <EditTaskForm fetchItems={fetchItems} id={t.id} />
+                      </div>
+                      <button
+                        id="remove-button-items"
+                        aria-label="Remove List Item"
+                        onClick={(e) => handleRemoveTask(e, list.id, t.id)}
+                      >
+                        ✖️
+                      </button>
+                    </li>
+                  ))}
+                  <TaskForm fetchItems={fetchItems} id={list.id} />
+                </ul>
+              </li>
+            ))}
+          </ul>
+        </div>
         <ListForm fetchItems={fetchItems} />
-      </ul>
-      <Bored />
+        <Bored />
+      </div>
     </div>
   );
 }
