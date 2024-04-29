@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
-import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { faCircleCheck } from "@fortawesome/free-regular-svg-icons";
 
 export const EditTaskForm = ({
@@ -24,19 +23,6 @@ export const EditTaskForm = ({
     setTitle(e.target.value);
   };
 
-  const handleCheck = async (e, taskId) => {
-    try {
-      await axios.put(`http://localhost:3000/tasks/${taskId}`, {
-        completed: !lists
-          .find((list) => list.tasks.some((task) => task.id === taskId))
-          .tasks.find((task) => task.id === taskId).completed,
-      });
-      fetchItems();
-    } catch (error) {
-      console.error("Error checking task:", error);
-    }
-  };
-
   const handleSubmit = async (e, tid) => {
     e.preventDefault();
     if (!title.trim()) {
@@ -52,35 +38,19 @@ export const EditTaskForm = ({
     fetchItems();
   };
 
-  const handleRemoveTask = async (e, id, tid) => {
-    await axios.delete(`http://localhost:3000/lists/${id}/${tid}`);
-    fetchItems();
-  };
-
   return (
     <div>
-      {showInput ? (
+      {!showInput ? (
+        <button onClick={handleClick} aria-label="Edit Task">
+          <FontAwesomeIcon icon={faPenToSquare} />
+        </button>
+      ) : (
         <form onSubmit={(e) => handleSubmit(e, id)}>
           <input type="text" value={title} onChange={handleChange} />
           <button type="submit">
             <FontAwesomeIcon icon={faCircleCheck} />
           </button>
         </form>
-      ) : (
-        <div>
-          <span>{title}</span>
-          <input
-            type="checkbox"
-            onChange={(e) => handleCheck(e, tid)}
-            checked={completed}
-          />
-          <button onClick={handleClick}>
-            <FontAwesomeIcon icon={faPenToSquare} />
-          </button>
-          <button onClick={(e) => handleRemoveTask(e, id, tid)}>
-            <FontAwesomeIcon icon={faTrashCan} />
-          </button>
-        </div>
       )}
     </div>
   );

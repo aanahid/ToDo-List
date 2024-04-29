@@ -1,9 +1,7 @@
-import React, {useState} from "react"
-import axios from 'axios';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome" 
-import { faCirclePlus } from "@fortawesome/free-solid-svg-icons"
-import { faCircleMinus } from "@fortawesome/free-solid-svg-icons"
-import { faCircleCheck } from "@fortawesome/free-regular-svg-icons"
+import React, { useState } from "react";
+import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 
 export const TaskForm = ({ fetchItems, id }) => { 
     const [title, setTitle] = useState("");
@@ -30,32 +28,25 @@ export const TaskForm = ({ fetchItems, id }) => {
         }
     };
 
-    return (
-        <div>
-            {!showInput && (
-                <button onClick={handleClick}>
-                    <FontAwesomeIcon icon={ faCirclePlus }/> New Task
-                </button>
-            )}
-            {showInput && (
-                <div>
-                    <button onClick={handleClick}>
-                        <FontAwesomeIcon icon={ faCircleMinus }/> New Task
-                    </button>
-                    <form onSubmit={handleSubmit}>
-                    <input
-                        type="text"
-                        value={title}
-                        onChange={handleChange}
-                        placeholder="Enter something..."
-                    />
-                    <button type="submit">
-                        <FontAwesomeIcon icon={faCircleCheck} />
-                    </button>
-                    </form>
-                </div>
-            )}
-        </div>
-    );
-
-}
+  return (
+    <div>
+      {!showInput ? (
+        <button className="button-text" onClick={handleClick}>
+          <FontAwesomeIcon icon={faCirclePlus} /> New Item
+        </button>
+      ) : (
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            value={title}
+            onChange={handleChange}
+            placeholder="Enter something..."
+          />
+          <button className="button-text" type="submit">
+            Submit
+          </button>
+        </form>
+      )}
+    </div>
+  );
+};
