@@ -30,17 +30,22 @@ export const EditListForm = ({ fetchItems, id }) => {
   };
 
   return (
-    <div>
-      <button onClick={handleClick}>📝</button>
-      {showInput && (
+    <div className="edit-form">
+      {!showInput ? (
+        <button onClick={handleClick} aria-label="Edit List Title">
+          📝
+        </button>
+      ) : (
         <form onSubmit={(e) => handleSubmit(e, id)}>
           <input
             type="text"
             value={title}
             onChange={handleChange}
-            placeholder="Enter something..."
+            placeholder="Enter new title"
           />
-          <button type="submit">Submit</button>
+          <button type="submit" aria-label="Submit">
+            ✔️
+          </button>
         </form>
       )}
     </div>

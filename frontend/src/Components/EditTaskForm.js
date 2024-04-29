@@ -31,16 +31,21 @@ export const EditTaskForm = ({ fetchItems, id }) => {
 
   return (
     <div>
-      <button onClick={handleClick}>📝</button>
-      {showInput && (
+      {!showInput ? (
+        <button onClick={handleClick} aria-label="Edit Task">
+          📝
+        </button>
+      ) : (
         <form onSubmit={(e) => handleSubmit(e, id)}>
           <input
             type="text"
             value={title}
             onChange={handleChange}
-            placeholder="Enter something..."
+            placeholder="Edit task"
           />
-          <button type="submit">Submit</button>
+          <button type="submit" aria-label="Submit">
+            ✔️
+          </button>
         </form>
       )}
     </div>
