@@ -2,6 +2,7 @@ import "./App.css";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { faSun } from "@fortawesome/free-regular-svg-icons";
 import { faMoon } from "@fortawesome/free-solid-svg-icons";
 import { ListForm } from "./Components/ListForm";
@@ -17,7 +18,6 @@ function App() {
     // If storedMode is null (not set in localStorage), default to false (light mode)
     return storedMode ? JSON.parse(storedMode) : false;
   });
-
   useEffect(() => {
     fetchItems();
   }, []);
@@ -37,6 +37,29 @@ function App() {
     }
   };
 
+  const handleCheck = async (e, taskId) => {
+    try {
+      await axios.put(`http://localhost:3000/tasks/${taskId}`, {
+        completed: !lists
+          .find((list) => list.tasks.some((task) => task.id === taskId))
+          .tasks.find((task) => task.id === taskId).completed,
+      });
+      fetchItems();
+    } catch (error) {
+      console.error("Error checking task:", error);
+    }
+  };
+
+  const handleRemoveList = async (e, id) => {
+    await axios.delete(`http://localhost:3000/lists/${id}`);
+    fetchItems();
+  };
+
+  const handleRemoveTask = async (e, id, tid) => {
+    await axios.delete(`http://localhost:3000/lists/${id}/${tid}`);
+    fetchItems();
+  };
+
   return (
     <div id="page" className={darkMode ? "dark-mode" : ""}>
       <div id="content">
@@ -46,7 +69,11 @@ function App() {
           className="icon-button"
           onClick={() => setDarkMode((prevMode) => !prevMode)}
         >
-          {darkMode ? "🔆" : "🌙"}
+          {darkMode ? (
+            <FontAwesomeIcon icon={faSun} />
+          ) : (
+            <FontAwesomeIcon icon={faMoon} />
+          )}
         </button>
         <h1>Welcome to GamePlan</h1>
         <span>Track your tasks with to-do lists!</span>
@@ -67,7 +94,7 @@ function App() {
                     aria-label="Remove List"
                     onClick={(e) => handleRemoveList(e, list.id)}
                   >
-                    ✖️
+                    <FontAwesomeIcon icon={faTrashCan} />
                   </button>
                 </div>
                 <ul className="tasks-list">
@@ -76,6 +103,7 @@ function App() {
                       <input
                         type="checkbox"
                         onChange={(e) => handleCheck(e, t.id)}
+                        checked={t.completed}
                       />
                       <span className="item-title">{t.title}</span>
                       <div className="actions">
@@ -86,7 +114,7 @@ function App() {
                         aria-label="Remove List Item"
                         onClick={(e) => handleRemoveTask(e, list.id, t.id)}
                       >
-                        ✖️
+                        <FontAwesomeIcon icon={faTrashCan} />
                       </button>
                     </li>
                   ))}

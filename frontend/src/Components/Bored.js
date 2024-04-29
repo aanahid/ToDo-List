@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShuffle } from "@fortawesome/free-solid-svg-icons";
 
 export const Bored = () => {
   const [activity, setActivity] = useState("");
@@ -15,7 +17,6 @@ export const Bored = () => {
         `https://www.boredapi.com/api/activity/`
       );
       setActivity(response.data.activity);
-      console.log(activity);
     } catch (error) {
       console.error("Error getting activity:", error);
     }
@@ -34,7 +35,7 @@ export const Bored = () => {
       <h3>Bored?</h3>
       <p>{activity}!</p>
       <button className="button-text" onClick={handleNew}>
-        🔄️ Get new suggestion
+        <FontAwesomeIcon icon={faShuffle} /> Get new suggestion
       </button>
     </div>
   );

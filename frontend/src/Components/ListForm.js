@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSquarePlus } from "@fortawesome/free-solid-svg-icons";
 
 export const ListForm = ({ fetchItems }) => {
   const [title, setTitle] = useState("");
@@ -30,7 +32,7 @@ export const ListForm = ({ fetchItems }) => {
     <div>
       {!showInput ? (
         <button className="button-contrast button-text" onClick={handleClick}>
-          ➕ New List
+          <FontAwesomeIcon icon={faSquarePlus} /> New List
         </button>
       ) : (
         <form onSubmit={handleSubmit}>
