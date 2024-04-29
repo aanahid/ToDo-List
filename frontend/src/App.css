@@ -4,20 +4,33 @@ body {
   padding: 0px;
 }
 
+h2,
+h3 {
+  margin: 0;
+}
+
 #page {
+  font-family: "Roboto", sans-serif;
   --color-background: #ccb5e1;
   --color-foreground: #362941;
+  --color-highlight: #eeddee;
+  --color-lists: #f1ecf1;
   --image-grayscale: 0;
   --image-opacity: 100%;
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
-  transition: background-color 0.5s ease; /* Add transition for background color */
+  transition: background-color 0.5s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Dark mode styles */
 #page.dark-mode {
   --color-background: #362941;
   --color-foreground: #efefef;
+  --color-highlight: #6d5374;
+  --color-lists: #4e3c53;
   --image-grayscale: 50%;
   --image-opacity: 90%;
 }
@@ -37,4 +50,186 @@ body {
   filter: grayscale(var(--image-grayscale)) opacity(var(--image-opacity));
 }
 
-/* Additional styles for specific elements can be added here */
+#content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 96%;
+  height: 100%;
+  margin: 20px;
+  margin-bottom: 300px;
+}
+
+.lists {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  margin-bottom: 20px; /* Add margin between rows */
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 100vw; /* Adjust the maximum width as needed */
+}
+
+.lists > li {
+  background-color: var(--color-lists);
+  width: 300px;
+  border-radius: 10px;
+  margin: 10px;
+  padding: 15px;
+}
+
+.list-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.list-title {
+  text-align: center;
+  font-size: x-large;
+  font-weight: bold;
+  word-wrap: break-word; /* Add this line */
+  max-width: 120px; /* Add this line */
+}
+
+.list-header .actions {
+  opacity: 0; /* Initially hide the buttons */
+  display: flex;
+  flex-direction: row;
+  padding-left: 20px;
+  width: 100%;
+}
+
+.list-header:hover .actions {
+  opacity: 1; /* Show the buttons on hover */
+}
+
+.button-container {
+  display: flex;
+  flex-direction: row;
+}
+
+button {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  border: none;
+  border-radius: 100px;
+  height: 32px;
+  width: fit-content;
+  font-size: large;
+  margin: 5px;
+  /* padding: 5px; */
+}
+
+button:hover {
+  background-color: var(--color-highlight);
+  box-shadow: 2px 3px 2px rgba(34, 33, 33, 0.3);
+}
+
+.button-contrast {
+  background-color: var(--color-lists);
+}
+
+.button-text {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+input {
+  border: none;
+  box-shadow: 2px 4px 2px rgba(0, 0, 0, 0.3);
+  border-radius: 100px;
+  /* margin: 5px; */
+  width: 100px;
+  height: 30px;
+}
+
+.icon-button {
+  background-color: var(--color-lists);
+  border-radius: 100px;
+  padding: 0;
+  width: 50px;
+  height: 50px;
+  font-size: xx-large;
+  padding-bottom: 5px;
+}
+
+#remove-button {
+  align-self: flex-end;
+}
+
+#dark-toggle {
+  align-self: flex-end;
+}
+
+.edit-form {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+/* Tasks formatting */
+
+.tasks-list {
+  list-style: none;
+  padding: 0;
+}
+.tasks-list > li {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.tasks-list > li > input[type="checkbox"] {
+  width: 30px;
+  margin-right: 15px;
+}
+.tasks-list > li > .item-title {
+  margin-right: 15px;
+  word-wrap: break-word; /* Add this line */
+  max-width: 80px; /* Add this line */
+}
+
+.tasks-list .actions {
+  display: none;
+  opacity: 0;
+  display: flex;
+  flex-direction: row;
+  padding-left: 20px;
+  width: 100%;
+}
+
+/* Show actions when li is hovered */
+.tasks-list > li:hover .actions {
+  display: flex;
+  opacity: 1;
+}
+
+/* Add highlight on hover */
+.tasks-list > li:hover {
+  background-color: var(--color-highlight); /* Adjust the color as needed */
+}
+
+#remove-button-items {
+  align-self: flex-end;
+}
+
+/* Bored */
+
+.bored-container {
+  background-color: var(--color-lists);
+  margin: 20px;
+  border-radius: 10px;
+  padding: 15px;
+  position: fixed;
+  bottom: 0;
+  word-wrap: break-word;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 5px 5px 2px rgba(63, 62, 62, 0.3);
+  /* left: 0; */
+}

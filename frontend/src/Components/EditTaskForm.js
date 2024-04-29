@@ -1,11 +1,18 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome" 
-import { faPenToSquare } from "@fortawesome/free-regular-svg-icons"
-import { faTrashCan } from "@fortawesome/free-regular-svg-icons"
-import { faCircleCheck } from "@fortawesome/free-regular-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
+import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
+import { faCircleCheck } from "@fortawesome/free-regular-svg-icons";
 
-export const EditTaskForm = ({ fetchItems, id, tid, currTitle, completed, lists }) => {
+export const EditTaskForm = ({
+  fetchItems,
+  id,
+  tid,
+  currTitle,
+  completed,
+  lists,
+}) => {
   const [title, setTitle] = useState(currTitle);
   const [showInput, setShowInput] = useState(false);
 
@@ -54,13 +61,9 @@ export const EditTaskForm = ({ fetchItems, id, tid, currTitle, completed, lists 
     <div>
       {showInput ? (
         <form onSubmit={(e) => handleSubmit(e, id)}>
-          <input
-            type="text"
-            value={title}
-            onChange={handleChange}
-          />
+          <input type="text" value={title} onChange={handleChange} />
           <button type="submit">
-            <FontAwesomeIcon icon={ faCircleCheck }/>
+            <FontAwesomeIcon icon={faCircleCheck} />
           </button>
         </form>
       ) : (
@@ -75,7 +78,7 @@ export const EditTaskForm = ({ fetchItems, id, tid, currTitle, completed, lists 
             <FontAwesomeIcon icon={faPenToSquare} />
           </button>
           <button onClick={(e) => handleRemoveTask(e, id, tid)}>
-            <FontAwesomeIcon icon={ faTrashCan }/>
+            <FontAwesomeIcon icon={faTrashCan} />
           </button>
         </div>
       )}
