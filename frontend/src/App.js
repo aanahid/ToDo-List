@@ -87,7 +87,7 @@ function App() {
                     <span className="list-title">{list.title}</span>
                   </h2>
                   <div className="actions">
-                    <EditListForm fetchItems={fetchItems} id={list.id} />
+                    <EditListForm fetchItems={fetchItems} id={list.id} currTitle={list.title}/>
                   </div>
                   <button
                     id="remove-button"
@@ -107,7 +107,7 @@ function App() {
                       />
                       <span className="item-title">{t.title}</span>
                       <div className="actions">
-                        <EditTaskForm fetchItems={fetchItems} id={t.id} />
+                        <EditTaskForm fetchItems={fetchItems} id={t.id} currTitle={t.title}/>
                       </div>
                       <button
                         id="remove-button-items"
