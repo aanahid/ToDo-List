@@ -1,6 +1,9 @@
 import "./App.css";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSun } from "@fortawesome/free-regular-svg-icons";
+import { faMoon } from "@fortawesome/free-solid-svg-icons";
 import { ListForm } from "./Components/ListForm";
 import { TaskForm } from "./Components/TaskForm";
 import { EditListForm } from "./Components/EditListForm";
@@ -9,12 +12,14 @@ import { Bored } from "./Components/Bored";
 
 function App() {
   const [lists, setLists] = useState([]);
-  const [darkMode, setDarkMode] = useState();
+  const [darkMode, setDarkMode] = useState(() => {
+    const storedMode = localStorage.getItem("darkMode");
+    // If storedMode is null (not set in localStorage), default to false (light mode)
+    return storedMode ? JSON.parse(storedMode) : false;
+  });
 
   useEffect(() => {
     fetchItems();
-    const isDarkMode = localStorage.getItem("darkMode") | true;
-    setDarkMode(isDarkMode);
   }, []);
 
   useEffect(() => {
@@ -30,29 +35,6 @@ function App() {
     } catch (error) {
       console.error("Error fetching lists:", error);
     }
-  };
-
-  const handleCheck = async (e, taskId) => {
-    try {
-      await axios.put(`http://localhost:3000/tasks/${taskId}`, {
-        completed: !lists
-          .find((list) => list.tasks.some((task) => task.id === taskId))
-          .tasks.find((task) => task.id === taskId).completed,
-      });
-      fetchItems();
-    } catch (error) {
-      console.error("Error checking task:", error);
-    }
-  };
-
-  const handleRemoveList = async (e, id) => {
-    await axios.delete(`http://localhost:3000/lists/${id}`);
-    fetchItems();
-  };
-
-  const handleRemoveTask = async (e, id, tid) => {
-    await axios.delete(`http://localhost:3000/lists/${id}/${tid}`);
-    fetchItems();
   };
 
   return (
