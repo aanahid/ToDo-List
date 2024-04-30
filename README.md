@@ -2,21 +2,22 @@
 
 ## Overview
 
-This project is a simple To-Do List application built using React. It allows users to add, edit, delete, and mark tasks as completed. The app provides an intuitive interface for managing daily tasks efficiently.
+This project is a simple To-Do List application built using React and Express.js. It allows users to add, edit, delete, and mark tasks as completed. The app provides an intuitive interface for managing daily tasks efficiently.
 Features
 
-- Create: Add new tasks to the list.
+- Create: Add new tasks to the list, create new list.
 - Read: View the list of tasks with their status.
-- Update: Edit task descriptions or completion status.
-- Delete: Remove tasks from the list.
+- Update: Edit task name, edit list name, change completion status.
+- Delete: Remove tasks from the list, remove list.
 - Mark as Completed: Toggle task completion status.
-- Responsive Design: Works seamlessly across various devices and screen sizes.
+- Other features: light and dark mode, activity suggestions.
 
 ## Technologies Used
 
-- React: JavaScript library for building user interfaces.
+- React: JavaScript library for building user interfaces, providing a component-based approach to front-end development.
+- Express.js: Web application framework for Node.js used to handle server-side logic and routing.
 - CSS: Styling for the user interface.
-- Something: Used for storing tasks locally within the browser.
+- Bored API: Used to get activity suggestion.
 
 ## Installation
 
@@ -34,8 +35,14 @@ Features
 
 Usage
 
-1. Start the development server:
+1. Start the backend server:
 
+`cd backend`
+`node server.mjs`
+
+2. Start the development server:
+
+`cd frontend`
 `npm start`
 
-2. Open your browser and navigate to http://localhost:3000.
+3. Open your browser and navigate to http://localhost:3000.
