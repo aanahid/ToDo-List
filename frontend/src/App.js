@@ -2,7 +2,6 @@ import "./App.css";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { faSun } from "@fortawesome/free-regular-svg-icons";
 import { faMoon } from "@fortawesome/free-solid-svg-icons";
 import { ListForm } from "./Components/ListForm";
@@ -35,16 +34,6 @@ function App() {
     } catch (error) {
       console.error("Error fetching lists:", error);
     }
-  };
-
-  const handleRemoveList = async (e, id) => {
-    await axios.delete(`http://localhost:3000/lists/${id}`);
-    fetchItems();
-  };
-
-  const handleRemoveTask = async (e, id, tid) => {
-    await axios.delete(`http://localhost:3000/lists/${id}/${tid}`);
-    fetchItems();
   };
 
   const handleCheck = async (e, taskId) => {
@@ -83,19 +72,7 @@ function App() {
             {lists.map((list) => (
               <li key={list.id}>
                 <div className="list-header">
-                  <h2>
-                    <span className="list-title">{list.title}</span>
-                  </h2>
-                  <div className="actions">
-                    <EditListForm fetchItems={fetchItems} id={list.id} currTitle={list.title}/>
-                  </div>
-                  <button
-                    id="remove-button"
-                    aria-label="Remove List"
-                    onClick={(e) => handleRemoveList(e, list.id)}
-                  >
-                    <FontAwesomeIcon icon={faTrashCan} />
-                  </button>
+                  <EditListForm fetchItems={fetchItems} id={list.id} currTitle={list.title}/>
                 </div>
                 <ul className="tasks-list">
                   {list.tasks.map((t) => (
@@ -105,17 +82,11 @@ function App() {
                         onChange={(e) => handleCheck(e, t.id)}
                         checked={t.completed}
                       />
-                      <span className="item-title">{t.title}</span>
-                      <div className="actions">
-                        <EditTaskForm fetchItems={fetchItems} id={t.id} currTitle={t.title}/>
-                      </div>
-                      <button
-                        id="remove-button-items"
-                        aria-label="Remove List Item"
-                        onClick={(e) => handleRemoveTask(e, list.id, t.id)}
-                      >
-                        <FontAwesomeIcon icon={faTrashCan} />
-                      </button>
+                      <EditTaskForm 
+                      fetchItems={fetchItems} 
+                      id={list.id}
+                      tid={t.id}
+                      currTitle={t.title}/>
                     </li>
                   ))}
                   <TaskForm fetchItems={fetchItems} id={list.id} />

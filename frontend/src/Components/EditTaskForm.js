@@ -3,14 +3,13 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import { faCircleCheck } from "@fortawesome/free-regular-svg-icons";
+import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 
 export const EditTaskForm = ({
   fetchItems,
   id,
   tid,
   currTitle,
-  completed,
-  lists,
 }) => {
   const [title, setTitle] = useState(currTitle);
   const [showInput, setShowInput] = useState(false);
@@ -38,19 +37,39 @@ export const EditTaskForm = ({
     fetchItems();
   };
 
+  const handleRemoveTask = async (e, id, tid) => {
+    await axios.delete(`http://localhost:3000/lists/${id}/${tid}`);
+    fetchItems();
+  };
+
   return (
     <div>
-      {!showInput ? (
-        <button onClick={handleClick} aria-label="Edit Task">
-          <FontAwesomeIcon icon={faPenToSquare} />
-        </button>
-      ) : (
+        {showInput ? (
         <form onSubmit={(e) => handleSubmit(e, id)}>
-          <input type="text" value={title} onChange={handleChange} />
+          <input
+            type="text"
+            value={title}
+            onChange={handleChange}
+            placeholder="Enter something..."
+          />
           <button type="submit">
             <FontAwesomeIcon icon={faCircleCheck} />
           </button>
         </form>
+      ) : (
+        <div className="row">
+          <span className="item-title">{title}</span>
+          <div className="actions">
+            <button onClick={handleClick}>
+              <FontAwesomeIcon icon={faPenToSquare} />
+            </button>
+            <button 
+              aria-label="Remove Task"
+              onClick={(e) => handleRemoveTask(e, id, tid)}>
+              <FontAwesomeIcon icon={ faTrashCan }/>
+            </button>
+          </div>
+        </div>
       )}
     </div>
   );
