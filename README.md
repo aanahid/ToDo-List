@@ -17,7 +17,7 @@ Features
 - React: JavaScript library for building user interfaces, providing a component-based approach to front-end development.
 - Express.js: Web application framework for Node.js used to handle server-side logic and routing.
 - CSS: Styling for the user interface.
-- Bored API: Used to get activity suggestion.
+- [Bored API](https://www.boredapi.com/): Used to get activity suggestion.
 
 ## Installation
 
